@@ -1,0 +1,1 @@
+twitvim-0.8.2.vmb: call delete('/Users/Alexander/.vim/plugin/twitvim.vim')|call delete('/Users/Alexander/.vim/doc/twitvim.txt')
