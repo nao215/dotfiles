@@ -1,4 +1,3 @@
-airjulius
 alpaca_powertabline
 html5.vim
 indentLine
@@ -8,7 +7,10 @@ powerline
 shaberu.vim
 unite.vim
 vim-coffee-script
+vim-haml
 vim-less
+vim-rails
+vim-ruby
 vim-surround
 vim-swift
 vimfiler.vim

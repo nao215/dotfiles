@@ -17,22 +17,24 @@ if neobundle#exists_not_installed_bundles()
         \ string(neobundle#get_not_installed_bundle_names())
   echomsg 'Please execute ":NeoBundleInstall" command.'
 endif
-
 NeoBundle 'kchmck/vim-coffee-script'
-NeoBundle 'Shougo/vimshell'
-NeoBundle 'syui/airjulius'
+"NeoBundle 'syui/airjulius'
 NeoBundle 'supermomonga/shaberu.vim'
 NeoBundle 'toyamarinyon/vim-swift'
 NeoBundle 'gre/play2vim'
-NeoBundle 'tpope/vim-surround'
 NeoBundle 'alpaca-tc/alpaca_powertabline'
 NeoBundle 'othree/html5.vim'
-NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
-NeoBundle 'Shougo/vimfiler.vim'
-NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'groenewege/vim-less'
 NeoBundle 'Yggdroot/indentLine'
+NeoBundle 'vim-ruby/vim-ruby'
+NeoBundle 'tpope/vim-surround'
+NeoBundle 'tpope/vim-haml'
+NeoBundle 'tpope/vim-rails'
+NeoBundle 'Shougo/vimfiler.vim'
+NeoBundle 'Shougo/neocomplcache'
+NeoBundle 'Shougo/vimshell'
+NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimproc', {
   \ 'build' : {
   \   'windows' : 'make -f make_mingw32.mak',
@@ -72,6 +74,7 @@ autocmd BufWritePost *.coffee silent make!
 autocmd QuickFixCmdPost * nested cwindow | redraw! 
 " Ctrl-cで右ウィンドウにコンパイル結果を一時表示する
 nnoremap <silent> <C-C> :CoffeeCompile vert <CR><C-w>h
+
 """""""""""""""""""""""config"""""""""""""""""""""""
 set clipboard=unnamed,autoselect
 set expandtab
