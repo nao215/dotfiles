@@ -8,9 +8,11 @@ if has('vim_starting')
 endif
 
 call neobundle#rc(expand('~/.vim/bundle/'))
-
-filetype plugin indent on     " Required!
-
+""filetype plugin indent on     " Required!
+""filetype indent on
+syntax enable
+syntax on
+filetype plugin indent on
 " Installation check.
 if neobundle#exists_not_installed_bundles()
   echomsg 'Not installed bundles : ' .
@@ -20,6 +22,7 @@ endif
 NeoBundle 'kchmck/vim-coffee-script'
 "NeoBundle 'syui/airjulius'
 NeoBundle 'supermomonga/shaberu.vim'
+NeoBundle 'stephpy/vim-yaml'
 NeoBundle 'toyamarinyon/vim-swift'
 NeoBundle 'gre/play2vim'
 NeoBundle 'alpaca-tc/alpaca_powertabline'
@@ -28,6 +31,7 @@ NeoBundle 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
 NeoBundle 'groenewege/vim-less'
 NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'vim-ruby/vim-ruby'
+NeoBundle 'slim-template/vim-slim'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-haml'
 NeoBundle 'tpope/vim-rails'
@@ -63,18 +67,12 @@ noremap md :'s,'ed<CR>
 noremap wq :r! good bye!<CR>,wq<CR>
 noremap <C-t> :tabnew_cdl<CR>
 noremap <C-n> :let g:vimfiler_edit_action = 'open'<CR>
-"""""""""""""""""""""""coffee"""""""""""""""""""""
-autocmd BufRead,BufNewFile,BufReadPre *.coffee   set filetype=coffee
-" インデント設定
-autocmd FileType coffee    setlocal sw=2 sts=2 ts=2 et
-" オートコンパイル
-  "保存と同時にコンパイルする
-autocmd BufWritePost *.coffee silent make! 
-  "エラーがあったら別ウィンドウで表示
-autocmd QuickFixCmdPost * nested cwindow | redraw! 
-" Ctrl-cで右ウィンドウにコンパイル結果を一時表示する
 nnoremap <silent> <C-C> :CoffeeCompile vert <CR><C-w>h
-
+"""""""""""""""""""""""autocmd"""""""""""""""""""""
+autocmd BufRead,BufNewFile,BufReadPre *.coffee   set filetype=coffee
+autocmd FileType coffee    setlocal sw=2 sts=2 ts=2 et
+autocmd QuickFixCmdPost * nested cwindow | redraw! 
+autocmd BufNewFile,BufRead *.slim set ft=slim
 """""""""""""""""""""""config"""""""""""""""""""""""
 set clipboard=unnamed,autoselect
 set expandtab
@@ -108,8 +106,8 @@ let complcache_enable_at_startup = 1
 let g:vimfiler_as_default_explorer = 1
 let g:vimfiler_safe_mode_by_default=0
 let g:netrw_liststyle=3
-autocmd VimEnter * VimFiler -split -simple -winwidth=30 -no-quit
-autocmd BufRead,BufNewFile * VimFiler -split -simple -winwidth=30 -no-quit
+autocmd VimEnter * VimFiler -split -simple -winwidth=40 -no-quit
+autocmd BufRead,BufNewFile * VimFiler -split -simple -winwidth=40 -no-quit
 
 "dist
 let g:neocomplcache_dictionary_filetype_lists = {
@@ -122,9 +120,6 @@ for k in split("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_",'\zs')
 endfor
 
 imap <expr> <TAB> pumvisible() ? "\<Down>" : "\<Tab>"
-filetype plugin indent on     " required!
-filetype indent on
-syntax on
 colorscheme darkblue
 
 """"""""""jarvim""""""""""
@@ -184,6 +179,6 @@ for n in range(1, 9)
 endfor
 map <silent> [Tag]n :tabnext<CR>
 """"""""""""""""""""""indentLine""""""""""""""""""""""""
-let g:indentLine_faster = 1
-nmap <silent><Leader>i :<C-u>IndentLinesToggle<CR>
+""let g:indentLine_faster = 1
+""nmap <silent><Leader>i :<C-u>IndentLinesToggle<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
