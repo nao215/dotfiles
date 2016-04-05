@@ -1,9 +1,18 @@
+export BUCKET_S3_NAME=boxil-development
+export BUCKET_S3_KEY=AKIAJR3BI6UOTMIZM7EA
+export BUCKET_S3_SECRET=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
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
 #alias
 alias startmysql='cd /usr/local/Cellar/mysql/5.6.19/support-files;mysql.server start'
 #ssh my server
 alias sshmysrv='ssh yanagisawa@153.121.73.36' 
+alias jsc="/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Resources/jsc"
+alias elasticsearch="/Users/Alexander/workspace/lib/elasticsearch/bin/elasticsearch"
 
 autoload -U colors; colors
+
+export HISTTIMEFORMAT='%y/%m/%d %H:%M:%S'
 
 PROMPT='%F{green}[%n:%~]$%f%F{white} '
 PROMPT2="%_%% "
@@ -40,11 +49,34 @@ precmd_functions=($precmd_functions _Z_precmd)
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
+
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 ZSH_THEME="y"
+
+# go path
+export GOPATH=~/go
+export PATH=$PATH:$GOPATH/bin
+
+#go
+function peco-select-history() {
+    local tac
+    if which tac > /dev/null; then
+        tac="tac"
+    else
+        tac="tail -r"
+    fi
+    BUFFER=$(\history -n 1 | \
+        eval $tac | \
+        peco --query "$LBUFFER")
+    CURSOR=$#BUFFER
+    zle clear-screen
+}
+zle -N peco-select-history
+bindkey '^r' peco-select-history
+
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -117,3 +149,36 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# Add environment variable COCOS_CONSOLE_ROOT for cocos2d-x
+export COCOS_CONSOLE_ROOT=/Users/Alexander/workspace/lib/cocos2d-x-3.6/tools/cocos2d-console/bin
+export PATH=$COCOS_CONSOLE_ROOT:$PATH
+
+# Add environment variable COCOS_TEMPLATES_ROOT for cocos2d-x
+export COCOS_TEMPLATES_ROOT=/Users/Alexander/workspace/lib/cocos2d-x-3.6/templates
+export PATH=$COCOS_TEMPLATES_ROOT:$PATH
+
+# Add environment variable ANT_ROOT for cocos2d-x
+export ANT_ROOT=/usr/local/Cellar/ant/1.9.3/libexec/bin
+export PATH=$ANT_ROOT:$PATH
+
+# TreeTagger
+export PATH=$PATH:/Users/Alexander/Applications/TreeTagger/cmd
+export PATH=$PATH:/Users/Alexander/Applications/TreeTagger/bin
+
+# Lua
+export LUA_PATH='/Users/Alexander/.luarocks/share/lua/5.1/?.lua;/Users/Alexander/.luarocks/share/lua/5.1/?/init.lua;/Users/Alexander/torch/install/share/lua/5.1/?.lua;/Users/Alexander/torch/install/share/lua/5.1/?/init.lua;./?.lua;/Users/Alexander/torch/install/share/luajit-2.1.0-beta1/?.lua;/usr/local/share/lua/5.1/?.lua;/usr/local/share/lua/5.1/?/init.lua'
+export LUA_CPATH='/Users/Alexander/.luarocks/lib/lua/5.1/?.so;/Users/Alexander/torch/install/lib/lua/5.1/?.so;./?.so;/usr/local/lib/lua/5.1/?.so;/usr/local/lib/lua/5.1/loadall.so'
+export PATH=/Users/Alexander/torch/install/bin:$PATH
+export LD_LIBRARY_PATH=/Users/Alexander/torch/install/lib:$LD_LIBRARY_PATH
+export DYLD_LIBRARY_PATH=/Users/Alexander/torch/install/lib:$DYLD_LIBRARY_PATH
+
+
+export CPATH=/usr/include/hdf5/mpich
+export LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/hdf5/mpich
+export PKG_CONFIG_PATH=/opt/luajit-2.0.3/lib/pkgconfig
+
+# Docker
+export DOCKER_HOST=tcp://localhost:4243
+
+. /Users/Alexander/torch/install/bin/torch-activate

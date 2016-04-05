@@ -19,6 +19,7 @@ if neobundle#exists_not_installed_bundles()
         \ string(neobundle#get_not_installed_bundle_names())
   echomsg 'Please execute ":NeoBundleInstall" command.'
 endif
+NeoBundle 'othree/yajs.vim', {'autoload':{'filetypes':['javascript']}}
 NeoBundle 'kchmck/vim-coffee-script'
 "NeoBundle 'syui/airjulius'
 NeoBundle 'supermomonga/shaberu.vim'
@@ -69,6 +70,7 @@ noremap <C-t> :tabnew_cdl<CR>
 noremap <C-n> :let g:vimfiler_edit_action = 'open'<CR>
 nnoremap <silent> <C-C> :CoffeeCompile vert <CR><C-w>h
 """""""""""""""""""""""autocmd"""""""""""""""""""""
+autocmd BufRead,BufNewFile *.es6 setfiletype javascript
 autocmd BufRead,BufNewFile,BufReadPre *.coffee   set filetype=coffee
 autocmd FileType coffee    setlocal sw=2 sts=2 ts=2 et
 autocmd QuickFixCmdPost * nested cwindow | redraw! 
@@ -122,16 +124,6 @@ endfor
 imap <expr> <TAB> pumvisible() ? "\<Down>" : "\<Tab>"
 colorscheme darkblue
 
-""""""""""jarvim""""""""""
-""call vimproc#system_bg('say welcome to vim')
-""noremap ms ms:call vimproc#system_bg('say mark start')<CR> 
-""noremap me me:call vimproc#system_bg('say mark end')<CR> 
-""noremap v :call vimproc#system_bg('say visual mode')<CR>v
-""noremap :wq :call vimproc#system_bg('say good bye ')<CR>:wq<CR>
-""noremap :q :call vimproc#system_bg('say good bye ')<CR>:q<CR>
-""noremap / :call vimproc#system_bg('say serch')<CR>/
-""noremap ? :call vimproc#system_bg('say serch')<CR>?
-""noremap <C-W><C-W> :call vimproc#system_bg('say change window')<CR><C-W><C-W> 
 """""""""""""""""""""for swift"""""""""""""""""""""
 au BufRead,BufNewFile *.swift setfiletype swift
 au FileType swift call FileType_Swift()
@@ -178,7 +170,3 @@ for n in range(1, 9)
   execute 'nnoremap <silent> [Tag]'.n  ':<C-u>tabnext'.n.'<CR>'
 endfor
 map <silent> [Tag]n :tabnext<CR>
-""""""""""""""""""""""indentLine""""""""""""""""""""""""
-""let g:indentLine_faster = 1
-""nmap <silent><Leader>i :<C-u>IndentLinesToggle<CR>
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""

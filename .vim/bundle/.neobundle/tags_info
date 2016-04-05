@@ -11,8 +11,11 @@ vim-haml
 vim-less
 vim-rails
 vim-ruby
+vim-slim
 vim-surround
 vim-swift
+vim-yaml
 vimfiler.vim
 vimproc
 vimshell
+yajs.vim
