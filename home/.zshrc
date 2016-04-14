@@ -1,6 +1,3 @@
-export BUCKET_S3_NAME=boxil-development
-export BUCKET_S3_KEY=AKIAJR3BI6UOTMIZM7EA
-export BUCKET_S3_SECRET=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
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 #alias
