@@ -1,4 +1,15 @@
-## Zsh
+## Install
+`gem install homesick`
+`homesick clone nao215/dotfiles`
+`cd ~ `
+`homesick symlink dotfiles`
+
+#### update
+`homesick pull dotfiles`
+`homesick symlink dotfiles`
+
+
+### Zsh
 
 1.install zsh
 
@@ -6,7 +17,7 @@
 
 3.install oh-my-zsh
 
-## Vim
+### Vim
 
 #### install dein
 
