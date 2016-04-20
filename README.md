@@ -1,12 +1,17 @@
 ## Install
-`gem install homesick`
-`homesick clone nao215/dotfiles`
-`cd ~ `
-`homesick symlink dotfiles`
+```gem install homesick```
+
+```homesick clone nao215/dotfiles```
+
+```cd ~ ```
+
+```homesick symlink dotfiles```
 
 #### update
-`homesick pull dotfiles`
-`homesick symlink dotfiles`
+
+```homesick pull dotfiles```
+
+```homesick symlink dotfiles```
 
 
 ### Zsh
@@ -21,12 +26,12 @@
 
 #### install dein
 
-`git clone https://github.com/Shougo/dein.vim.git
- ~/.homesick/repos/dotfiles/home/repos/github.com/Shougo/dein.vim`
+```git clone https://github.com/Shougo/dein.vim.git
+ ~/.homesick/repos/dotfiles/home/repos/github.com/Shougo/dein.vim```
 
-`curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh`
+```curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh```
 
-`sh ./installer.sh ~/.homesick/repos/dotfiles/home/repos/github.com/Shougo/dein.vim`
+```sh ./installer.sh ~/.homesick/repos/dotfiles/home/repos/github.com/Shougo/dein.vim```
 
 in your vim,
-`:call dein#install()`
+```:call dein#install()```
