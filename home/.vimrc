@@ -1,53 +1,38 @@
-"--------------------------------------------------------------------------
-"" neobundle
-set nocompatible               " Be iMproved
-filetype off                   " Required!
-
-if has('vim_starting')
-  set runtimepath+=~/.vim/bundle/neobundle.vim/
+"""""""""""""""""""""""Dein"""""""""""""""""""""""
+if &compatible
+  set nocompatible
 endif
+set runtimepath^=~/.homesick/repos/dotfiles/home/repos/github.com/Shougo/dein.vim
 
-call neobundle#rc(expand('~/.vim/bundle/'))
-""filetype plugin indent on     " Required!
-""filetype indent on
-syntax enable
-syntax on
+call dein#begin(expand('~/.cache/dein'))
+
+call dein#add('~/.homesick/repos/dotfiles/home/repos/github.com/Shougo/dein.vim')
+call dein#add('othree/yajs.vim')
+call dein#add('kchmck/vim-coffee-script')
+call dein#add('kchmck/vim-coffee-script')
+call dein#add('othree/yajs.vim', {'autoload':{'filetypes':['javascript']}})
+call dein#add('kchmck/vim-coffee-script')
+call dein#add('supermomonga/shaberu.vim')
+call dein#add('stephpy/vim-yaml')
+call dein#add('toyamarinyon/vim-swift')
+call dein#add('gre/play2vim')
+call dein#add('alpaca-tc/alpaca_powertabline')
+call dein#add('othree/html5.vim')
+call dein#add('Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'})
+call dein#add('groenewege/vim-less')
+call dein#add('Yggdroot/indentLine')
+call dein#add('vim-ruby/vim-ruby')
+call dein#add('slim-template/vim-slim')
+call dein#add('tpope/vim-surround')
+call dein#add('tpope/vim-haml')
+call dein#add('tpope/vim-rails')
+call dein#add('Shougo/vimfiler.vim')
+call dein#add('Shougo/neocomplcache')
+call dein#add('Shougo/vimshell')
+call dein#add('Shougo/unite.vim')
+
 filetype plugin indent on
-" Installation check.
-if neobundle#exists_not_installed_bundles()
-  echomsg 'Not installed bundles : ' .
-        \ string(neobundle#get_not_installed_bundle_names())
-  echomsg 'Please execute ":NeoBundleInstall" command.'
-endif
-NeoBundle 'othree/yajs.vim', {'autoload':{'filetypes':['javascript']}}
-NeoBundle 'kchmck/vim-coffee-script'
-"NeoBundle 'syui/airjulius'
-NeoBundle 'supermomonga/shaberu.vim'
-NeoBundle 'stephpy/vim-yaml'
-NeoBundle 'toyamarinyon/vim-swift'
-NeoBundle 'gre/play2vim'
-NeoBundle 'alpaca-tc/alpaca_powertabline'
-NeoBundle 'othree/html5.vim'
-NeoBundle 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
-NeoBundle 'groenewege/vim-less'
-NeoBundle 'Yggdroot/indentLine'
-NeoBundle 'vim-ruby/vim-ruby'
-NeoBundle 'slim-template/vim-slim'
-NeoBundle 'tpope/vim-surround'
-NeoBundle 'tpope/vim-haml'
-NeoBundle 'tpope/vim-rails'
-NeoBundle 'Shougo/vimfiler.vim'
-NeoBundle 'Shougo/neocomplcache'
-NeoBundle 'Shougo/vimshell'
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/vimproc', {
-  \ 'build' : {
-  \   'windows' : 'make -f make_mingw32.mak',
-  \   'cygwin' : 'make -f make_cygwin.mak',
-  \   'mac' : 'make -f make_mac.mak',
-  \   'unix' : 'make -f make_unix.mak',
-  \ },
-  \ }
+syntax on
 """"""""""""""""""""""Maping""""""""""""""""""""""
 map <C-l> gt
 map <C-h> gT
@@ -84,11 +69,9 @@ set shiftwidth=2
 set cursorline
 set number
 set laststatus=2
-set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
+set rtp+=.vim/bundle/powerline/powerline/bindings/vim
 set noswapfile
-let g:Powerline_symbols = 'fancy'
 set t_Co=256
-let g:Powerline_symbols = 'compatible'
 set mouse=a
 set noshowmode
 set guifont=Ricty\ Discord:h12
@@ -99,6 +82,7 @@ set encoding=utf-8
 set fileencodings=utf-8,iso-2022-jp,euc-jp,sjis
 set fileformats=unix,dos,mac
 set nowrap
+let g:Powerline_symbols = 'compatible'
 let g:netrw_liststyle = 3
 let g:netrw_list_hide = 'CVS,\(^\|\s\s\)\zs\.\S\+'
 let g:netrw_altv = 1
@@ -170,3 +154,4 @@ for n in range(1, 9)
   execute 'nnoremap <silent> [Tag]'.n  ':<C-u>tabnext'.n.'<CR>'
 endfor
 map <silent> [Tag]n :tabnext<CR>
+
