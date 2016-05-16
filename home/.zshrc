@@ -5,7 +5,6 @@ alias startmysql='cd /usr/local/Cellar/mysql/5.6.19/support-files;mysql.server s
 #ssh my server
 alias sshmysrv='ssh yanagisawa@153.121.73.36' 
 alias jsc="/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Resources/jsc"
-alias elasticsearch="/Users/Alexander/workspace/lib/elasticsearch/bin/elasticsearch"
 
 autoload -U colors; colors
 
@@ -36,12 +35,6 @@ eval $(/usr/local/bin/gdircolors ~/workspace/ForSystem/solarized/dircolors-solar
 export PATH=$HOME/.rbenv/bin:$PATH
 eval "$(rbenv init - zsh)"
 if which rbenv > /dev/null; then eval "$(rbenv init - zsh)"; fi
-
-#z
-. /usr/local/etc/profile.d/z.sh
-function _Z_precmd {
-  z --add "$(pwd -P)" 61 }
-precmd_functions=($precmd_functions _Z_precmd)
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
@@ -146,30 +139,11 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-
 # Add environment variable COCOS_CONSOLE_ROOT for cocos2d-x
-export COCOS_CONSOLE_ROOT=/Users/Alexander/workspace/lib/cocos2d-x-3.6/tools/cocos2d-console/bin
-export PATH=$COCOS_CONSOLE_ROOT:$PATH
-
-# Add environment variable COCOS_TEMPLATES_ROOT for cocos2d-x
-export COCOS_TEMPLATES_ROOT=/Users/Alexander/workspace/lib/cocos2d-x-3.6/templates
-export PATH=$COCOS_TEMPLATES_ROOT:$PATH
 
 # Add environment variable ANT_ROOT for cocos2d-x
 export ANT_ROOT=/usr/local/Cellar/ant/1.9.3/libexec/bin
 export PATH=$ANT_ROOT:$PATH
-
-# TreeTagger
-export PATH=$PATH:/Users/Alexander/Applications/TreeTagger/cmd
-export PATH=$PATH:/Users/Alexander/Applications/TreeTagger/bin
-
-# Lua
-export LUA_PATH='/Users/Alexander/.luarocks/share/lua/5.1/?.lua;/Users/Alexander/.luarocks/share/lua/5.1/?/init.lua;/Users/Alexander/torch/install/share/lua/5.1/?.lua;/Users/Alexander/torch/install/share/lua/5.1/?/init.lua;./?.lua;/Users/Alexander/torch/install/share/luajit-2.1.0-beta1/?.lua;/usr/local/share/lua/5.1/?.lua;/usr/local/share/lua/5.1/?/init.lua'
-export LUA_CPATH='/Users/Alexander/.luarocks/lib/lua/5.1/?.so;/Users/Alexander/torch/install/lib/lua/5.1/?.so;./?.so;/usr/local/lib/lua/5.1/?.so;/usr/local/lib/lua/5.1/loadall.so'
-export PATH=/Users/Alexander/torch/install/bin:$PATH
-export LD_LIBRARY_PATH=/Users/Alexander/torch/install/lib:$LD_LIBRARY_PATH
-export DYLD_LIBRARY_PATH=/Users/Alexander/torch/install/lib:$DYLD_LIBRARY_PATH
-
 
 export CPATH=/usr/include/hdf5/mpich
 export LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/hdf5/mpich
@@ -178,4 +152,5 @@ export PKG_CONFIG_PATH=/opt/luajit-2.0.3/lib/pkgconfig
 # Docker
 export DOCKER_HOST=tcp://localhost:4243
 
-. /Users/Alexander/torch/install/bin/torch-activate
+export PATH=/usr/local/bin:$PATH
+export PATH=/Users/01014562/FDK/Tools/osx:$PATH
