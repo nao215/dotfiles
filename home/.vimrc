@@ -1,12 +1,18 @@
-"""""""""""""""""""""""Dein"""""""""""""""""""""""
+ """""""""""""""""""""""Dein"""""""""""""""""""""""
 if &compatible
+call dein#add('haya14busa/vim-migemo')
   set nocompatible
 endif
 set runtimepath^=~/.homesick/repos/dotfiles/home/repos/github.com/Shougo/dein.vim
 
 call dein#begin(expand('~/.cache/dein'))
 
-call dein#add('~/.homesick/repos/dotfiles/home/repos/github.com/Shougo/dein.vim')
+call dein#add('Shougo/dein.vim')
+call dein#add('haya14busa/vim-migemo')
+call dein#add('haya14busa/incsearch.vim')
+call dein#add('plasticboy/vim-markdown')
+call dein#add('kannokanno/previm')
+call dein#add('tyru/open-browser.vim')
 call dein#add('othree/yajs.vim')
 call dein#add('kchmck/vim-coffee-script')
 call dein#add('kchmck/vim-coffee-script')
@@ -31,9 +37,14 @@ call dein#add('Shougo/neocomplcache')
 call dein#add('Shougo/vimshell')
 call dein#add('Shougo/unite.vim')
 
+call dein#end()
+
 filetype plugin indent on
 syntax on
-""""""""""""""""""""""Maping""""""""""""""""""""""
+""""""""""""""""""""""Mapping""""""""""""""""""""""
+map / <Plug>(incsearch-stay)
+map ? <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-forwrd)
 map <C-l> gt
 map <C-h> gT
 inoremap { {}<LEFT>
@@ -153,5 +164,4 @@ nmap    t [Tag]
 for n in range(1, 9)
   execute 'nnoremap <silent> [Tag]'.n  ':<C-u>tabnext'.n.'<CR>'
 endfor
-map <silent> [Tag]n :tabnext<CR>
-
+map <silent> [Tag]n :tabnext<CR>   
