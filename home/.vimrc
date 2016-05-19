@@ -6,18 +6,15 @@ endif
 set runtimepath^=~/.homesick/repos/dotfiles/home/repos/github.com/Shougo/dein.vim
 
 call dein#begin(expand('~/.cache/dein'))
-
 call dein#add('Shougo/dein.vim')
+call dein#add('scrooloose/syntastic')
 call dein#add('haya14busa/vim-migemo')
 call dein#add('haya14busa/incsearch.vim')
 call dein#add('plasticboy/vim-markdown')
 call dein#add('kannokanno/previm')
 call dein#add('tyru/open-browser.vim')
-call dein#add('othree/yajs.vim')
-call dein#add('kchmck/vim-coffee-script')
 call dein#add('kchmck/vim-coffee-script')
 call dein#add('othree/yajs.vim', {'autoload':{'filetypes':['javascript']}})
-call dein#add('kchmck/vim-coffee-script')
 call dein#add('supermomonga/shaberu.vim')
 call dein#add('stephpy/vim-yaml')
 call dein#add('toyamarinyon/vim-swift')
@@ -93,6 +90,9 @@ set encoding=utf-8
 set fileencodings=utf-8,iso-2022-jp,euc-jp,sjis
 set fileformats=unix,dos,mac
 set nowrap
+let g:syntastic_mode_map = { 'mode': 'passive',
+                           \ 'active_filetypes': ['ruby', 'javascript'],
+                           \ 'passive_filetypes': [] }
 let g:Powerline_symbols = 'compatible'
 let g:netrw_liststyle = 3
 let g:netrw_list_hide = 'CVS,\(^\|\s\s\)\zs\.\S\+'
