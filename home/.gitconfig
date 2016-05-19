@@ -1,0 +1,11 @@
+[color]
+  ui = auto
+[alias]
+  st = status
+  co = checkout
+  br = branch
+  cm = commit
+[filter "lfs"]
+  clean = git-lfs clean %f
+  smudge = git-lfs smudge %f
+  required = true
