@@ -6,7 +6,11 @@ endif
 set runtimepath^=~/.homesick/repos/dotfiles/home/repos/github.com/Shougo/dein.vim
 
 call dein#begin(expand('~/.cache/dein'))
+
 call dein#add('Shougo/dein.vim')
+call dein#add('csscomb/vim-csscomb')
+call dein#add('markstory/vim-files.git')
+call dein#add('evidens/vim-twig')
 call dein#add('scrooloose/syntastic')
 call dein#add('haya14busa/vim-migemo')
 call dein#add('haya14busa/incsearch.vim')
@@ -15,7 +19,6 @@ call dein#add('kannokanno/previm')
 call dein#add('tyru/open-browser.vim')
 call dein#add('kchmck/vim-coffee-script')
 call dein#add('othree/yajs.vim', {'autoload':{'filetypes':['javascript']}})
-call dein#add('supermomonga/shaberu.vim')
 call dein#add('stephpy/vim-yaml')
 call dein#add('toyamarinyon/vim-swift')
 call dein#add('gre/play2vim')
@@ -39,9 +42,9 @@ call dein#end()
 filetype plugin indent on
 syntax on
 """"""""""""""""""""""Mapping""""""""""""""""""""""
-map / <Plug>(incsearch-stay)
-map ? <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-forwrd)
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
 map <C-l> gt
 map <C-h> gT
 inoremap { {}<LEFT>
@@ -65,12 +68,17 @@ nnoremap <silent> <C-C> :CoffeeCompile vert <CR><C-w>h
 """""""""""""""""""""""autocmd"""""""""""""""""""""
 autocmd BufRead,BufNewFile *.es6 setfiletype javascript
 autocmd BufRead,BufNewFile,BufReadPre *.coffee   set filetype=coffee
+autocmd FileType css noremap <buffer> <leader>bc :CSScomb<CR>
 autocmd FileType coffee    setlocal sw=2 sts=2 ts=2 et
 autocmd QuickFixCmdPost * nested cwindow | redraw! 
 autocmd BufNewFile,BufRead *.slim set ft=slim
+autocmd VimEnter,BufRead,BufNewFile *.twig set ft=html
+autocmd VimEnter,BufRead,BufNewFile *.html.twig set ft=html
+autocmd VimEnter * VimFiler -split -simple -winwidth=40 -no-quit
+autocmd BufNewFile * VimFiler -split -simple -winwidth=40 -no-quit
 """""""""""""""""""""""config"""""""""""""""""""""""
 set clipboard=unnamed,autoselect
-set expandtab
+set noexpandtab
 set tabstop=2
 set softtabstop=2
 set shiftwidth=2
@@ -85,11 +93,11 @@ set noshowmode
 set guifont=Ricty\ Discord:h12
 set guifontwide=Ricty\ Discord:h12
 set tabstop=2
-"set fileencoding=utf-8
 set encoding=utf-8
 set fileencodings=utf-8,iso-2022-jp,euc-jp,sjis
 set fileformats=unix,dos,mac
 set nowrap
+let g:vim_markdown_folding_disabled=1
 let g:syntastic_mode_map = { 'mode': 'passive',
                            \ 'active_filetypes': ['ruby', 'javascript'],
                            \ 'passive_filetypes': [] }
@@ -103,8 +111,7 @@ let complcache_enable_at_startup = 1
 let g:vimfiler_as_default_explorer = 1
 let g:vimfiler_safe_mode_by_default=0
 let g:netrw_liststyle=3
-autocmd VimEnter * VimFiler -split -simple -winwidth=40 -no-quit
-autocmd BufRead,BufNewFile * VimFiler -split -simple -winwidth=40 -no-quit
+let g:syntastic_scss_checkers = ['stylelint']
 
 "dist
 let g:neocomplcache_dictionary_filetype_lists = {

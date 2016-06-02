@@ -2,7 +2,7 @@
   ui = auto
 [alias]
   st = status
-  co = checkout
+  ch = checkout
   br = branch
   cm = commit
 [filter "lfs"]
