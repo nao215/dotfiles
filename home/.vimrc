@@ -1,11 +1,11 @@
  """""""""""""""""""""""Dein"""""""""""""""""""""""
 if &compatible
-call dein#add('haya14busa/vim-migemo')
   set nocompatible
 endif
+
 set runtimepath^=~/.homesick/repos/dotfiles/home/repos/github.com/Shougo/dein.vim
 
-call dein#begin(expand('~/.cache/dein'))
+call dein#begin(expand('~/.vim/dein'))
 
 call dein#add('Shougo/dein.vim')
 call dein#add('csscomb/vim-csscomb')
