@@ -5,7 +5,7 @@ endif
 
 set runtimepath^=~/.homesick/repos/dotfiles/home/repos/github.com/Shougo/dein.vim
 
-call dein#begin(expand('~/.vim/dein'))
+call dein#begin(expand('~/.cache/dein'))
 
 " Dark powered vim plugin manager
 call dein#add('Shougo/dein.vim')
