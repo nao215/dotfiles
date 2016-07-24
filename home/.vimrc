@@ -7,8 +7,15 @@ set runtimepath^=~/.homesick/repos/dotfiles/home/repos/github.com/Shougo/dein.vi
 
 call dein#begin(expand('~/.cache/dein'))
 
+" Dark powered vim plugin manager
 call dein#add('Shougo/dein.vim')
+
+" Ctrl + p make me smart file search
+call dein#add('ctrlpvim/ctrlp.vim')
+
+" CSS Fixer http://csscomb.com/
 call dein#add('csscomb/vim-csscomb')
+
 call dein#add('markstory/vim-files.git')
 call dein#add('evidens/vim-twig')
 call dein#add('scrooloose/syntastic')
@@ -47,6 +54,7 @@ map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
 map <C-l> gt
 map <C-h> gT
+map <C-c> :CSScomb<CR>
 inoremap { {}<LEFT>
 inoremap [ []<LEFT>
 inoremap ( ()<LEFT>
@@ -58,13 +66,15 @@ vnoremap ( "zdi^V(<C-R>z)<ESC>
 vnoremap " "zdi^V"<C-R>z^V"<ESC>
 vnoremap ' "zdi'<C-R>z'<ESC>
 noremap <C-a> ^
+noremap <C-g> :vimgrep
+noremap <C-e> $
+noremap <C-k> d$
 noremap <silent> <C-p> "0p<CR>
 noremap mc :'s,'ey<CR>
 noremap md :'s,'ed<CR>
 noremap wq :r! good bye!<CR>,wq<CR>
 noremap <C-t> :tabnew_cdl<CR>
 noremap <C-n> :let g:vimfiler_edit_action = 'open'<CR>
-nnoremap <silent> <C-C> :CoffeeCompile vert <CR><C-w>h
 """""""""""""""""""""""autocmd"""""""""""""""""""""
 autocmd BufRead,BufNewFile *.es6 setfiletype javascript
 autocmd BufRead,BufNewFile,BufReadPre *.coffee   set filetype=coffee
@@ -74,8 +84,8 @@ autocmd QuickFixCmdPost * nested cwindow | redraw!
 autocmd BufNewFile,BufRead *.slim set ft=slim
 autocmd VimEnter,BufRead,BufNewFile *.twig set ft=html
 autocmd VimEnter,BufRead,BufNewFile *.html.twig set ft=html
-autocmd VimEnter * VimFiler -split -simple -winwidth=40 -no-quit
-autocmd BufNewFile * VimFiler -split -simple -winwidth=40 -no-quit
+autocmd VimEnter * VimFiler -split -simple -winwidth=30 -no-quit
+autocmd BufNewFile * VimFiler -split -simple -winwidth=30 -no-quit
 """""""""""""""""""""""config"""""""""""""""""""""""
 set clipboard=unnamed,autoselect
 set noexpandtab
@@ -97,6 +107,7 @@ set encoding=utf-8
 set fileencodings=utf-8,iso-2022-jp,euc-jp,sjis
 set fileformats=unix,dos,mac
 set nowrap
+set wildignore+=**/node_modules/*,*.so,*.swp,*.zip  
 let g:vim_markdown_folding_disabled=1
 let g:syntastic_mode_map = { 'mode': 'passive',
                            \ 'active_filetypes': ['ruby', 'javascript'],
@@ -111,7 +122,16 @@ let complcache_enable_at_startup = 1
 let g:vimfiler_as_default_explorer = 1
 let g:vimfiler_safe_mode_by_default=0
 let g:netrw_liststyle=3
-let g:syntastic_scss_checkers = ['stylelint']
+let g:syntastic_scss_checkers=['stylelint']
+let g:syntastic_javascript_checkers=['eslint']
+let g:ctrlp_user_command = 'files -a %s'
+
+"ctrlp
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v(node_modules|[\/]\.(git|hg|svn))$',
+  \ 'file': '\v\.(exe|so|dll)$',
+  \ 'link': 'some_bad_symbolic_links',
+  \ }
 
 "dist
 let g:neocomplcache_dictionary_filetype_lists = {
