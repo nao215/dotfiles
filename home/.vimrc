@@ -16,6 +16,12 @@ call dein#add('ctrlpvim/ctrlp.vim')
 " CSS Fixer http://csscomb.com/
 call dein#add('csscomb/vim-csscomb')
 
+" easy motion(cursor movement)
+call dein#add('easymotion/vim-easymotion')
+
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+nmap s <Plug>(easymotion-s2)
+
 call dein#add('markstory/vim-files.git')
 call dein#add('evidens/vim-twig')
 call dein#add('scrooloose/syntastic')
@@ -107,7 +113,10 @@ set encoding=utf-8
 set fileencodings=utf-8,iso-2022-jp,euc-jp,sjis
 set fileformats=unix,dos,mac
 set nowrap
-set wildignore+=**/node_modules/*,*.so,*.swp,*.zip  
+set foldcolumn=4
+set foldmethod=indent
+set foldlevel=100
+
 let g:vim_markdown_folding_disabled=1
 let g:syntastic_mode_map = { 'mode': 'passive',
                            \ 'active_filetypes': ['ruby', 'javascript'],
@@ -124,14 +133,10 @@ let g:vimfiler_safe_mode_by_default=0
 let g:netrw_liststyle=3
 let g:syntastic_scss_checkers=['stylelint']
 let g:syntastic_javascript_checkers=['eslint']
-let g:ctrlp_user_command = 'files -a %s'
 
 "ctrlp
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v(node_modules|[\/]\.(git|hg|svn))$',
-  \ 'file': '\v\.(exe|so|dll)$',
-  \ 'link': 'some_bad_symbolic_links',
-  \ }
+let g:ctrlp_custom_ignore = '\v[\/](public|vender|storage|node_modules|target|dist)|(\.(swp|ico|git|svn))$'
+set wildignore+=*/node_modules/*,*/gulp/temp/*,*.so,*.swp,*.zip
 
 "dist
 let g:neocomplcache_dictionary_filetype_lists = {
