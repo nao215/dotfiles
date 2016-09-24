@@ -22,6 +22,9 @@ call dein#add('easymotion/vim-easymotion')
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
 nmap s <Plug>(easymotion-s2)
 
+" editorconfig
+call dein#add('editorconfig/editorconfig-vim')
+
 call dein#add('markstory/vim-files.git')
 call dein#add('evidens/vim-twig')
 call dein#add('scrooloose/syntastic')
