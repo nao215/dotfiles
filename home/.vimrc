@@ -10,6 +10,16 @@ call dein#begin(expand('~/.cache/dein'))
 " Dark powered vim plugin manager
 call dein#add('Shougo/dein.vim')
 
+" For JSX
+call dein#add('mxw/vim-jsx')
+
+" Syntastic
+call dein#add('pmsorhaindo/syntastic-local-eslint.vim')
+call dein#add('scrooloose/syntastic')
+
+" For JS Syntax
+call dein#add('pangloss/vim-javascript')
+
 " Ctrl + p make me smart file search
 call dein#add('ctrlpvim/ctrlp.vim')
 
@@ -27,7 +37,6 @@ call dein#add('editorconfig/editorconfig-vim')
 
 call dein#add('markstory/vim-files.git')
 call dein#add('evidens/vim-twig')
-call dein#add('scrooloose/syntastic')
 call dein#add('haya14busa/vim-migemo')
 call dein#add('haya14busa/incsearch.vim')
 call dein#add('plasticboy/vim-markdown')
