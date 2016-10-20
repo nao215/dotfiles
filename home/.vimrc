@@ -209,3 +209,7 @@ for n in range(1, 9)
   execute 'nnoremap <silent> [Tag]'.n  ':<C-u>tabnext'.n.'<CR>'
 endfor
 map <silent> [Tag]n :tabnext<CR>   
+
+" For Edit Vimrc
+command! Rv source ~/.vimrc
+command! Ev edit ~/.vimrc
