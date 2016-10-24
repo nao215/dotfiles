@@ -10,6 +10,9 @@ call dein#begin(expand('~/.cache/dein'))
 " Dark powered vim plugin manager
 call dein#add('Shougo/dein.vim')
 
+" For Git
+call dein#add('vim-fugitive')
+
 " For JSX
 call dein#add('mxw/vim-jsx')
 
