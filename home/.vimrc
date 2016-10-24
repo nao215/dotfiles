@@ -163,14 +163,6 @@ endfor
 imap <expr> <TAB> pumvisible() ? "\<Down>" : "\<Tab>"
 colorscheme darkblue
 
-" moving bindings like emacs when insert mode "
-imap <C-a> <Home>
-imap <C-e> <End>
-imap <C-b> <Left>
-imap <C-f> <Right>
-imap <C-n> <Down>
-imap <C-p> <UP>
-
 """""""""""""""""""""for swift"""""""""""""""""""""
 au BufRead,BufNewFile *.swift setfiletype swift
 au FileType swift call FileType_Swift()
