@@ -128,6 +128,7 @@ set nowrap
 set foldcolumn=4
 set foldmethod=indent
 set foldlevel=100
+set backspace=indent,eol,start
 
 let g:vim_markdown_folding_disabled=1
 let g:syntastic_mode_map = { 'mode': 'passive',
