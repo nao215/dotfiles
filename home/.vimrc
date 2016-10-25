@@ -17,9 +17,25 @@ call dein#add('airblade/vim-gitgutter')
 " For JSX
 call dein#add('mxw/vim-jsx')
 
-" Syntastic
-call dein#add('pmsorhaindo/syntastic-local-eslint.vim')
-call dein#add('scrooloose/syntastic')
+" Neomake
+call dein#add('neomake/neomake')
+function! NeomakeESlintChecker()
+  let l:npm_bin = ''
+  let l:eslint = 'eslint'
+
+  if executable('npm')
+    let l:npm_bin = split(system('npm bin'), '\n')[0]
+  endif
+
+  if strlen(l:npm_bin) && executable(l:npm_bin . '/eslint')
+    let l:eslint = l:npm_bin . '/eslint'
+  endif
+
+  let b:neomake_javascript_eslint_exe = l:eslint
+endfunction
+autocmd FileType javascript :call NeomakeESlintChecker()
+
+autocmd! BufWritePost,BufReadPost * Neomake
 
 " For JS Syntax
 call dein#add('pangloss/vim-javascript')
@@ -98,6 +114,7 @@ noremap wq :r! good bye!<CR>,wq<CR>
 noremap <C-t> :tabnew_cdl<CR>
 noremap <C-n> :let g:vimfiler_edit_action = 'open'<CR>
 """""""""""""""""""""""autocmd"""""""""""""""""""""
+autocmd BufRead,BufWritePost * Neomake
 autocmd BufRead,BufNewFile *.es6 setfiletype javascript
 autocmd BufRead,BufNewFile,BufReadPre *.coffee   set filetype=coffee
 autocmd FileType css noremap <buffer> <leader>bc :CSScomb<CR>
@@ -135,9 +152,6 @@ set foldlevel=100
 set backspace=indent,eol,start
 
 let g:vim_markdown_folding_disabled=1
-let g:syntastic_mode_map = { 'mode': 'passive',
-                           \ 'active_filetypes': ['ruby', 'javascript'],
-                           \ 'passive_filetypes': [] }
 let g:Powerline_symbols = 'compatible'
 let g:netrw_liststyle = 3
 let g:netrw_list_hide = 'CVS,\(^\|\s\s\)\zs\.\S\+'
@@ -148,8 +162,6 @@ let complcache_enable_at_startup = 1
 let g:vimfiler_as_default_explorer = 1
 let g:vimfiler_safe_mode_by_default=0
 let g:netrw_liststyle=3
-let g:syntastic_scss_checkers=['stylelint']
-let g:syntastic_javascript_checkers=['eslint']
 
 "ctrlp
 let g:ctrlp_custom_ignore = '\v[\/](public|vender|storage|node_modules|target|dist)|(\.(swp|ico|git|svn))$'
