@@ -1,4 +1,4 @@
-"""""""""""""""""""""""Dein"""""""""""""""""""""""
+" Dein Settings
 if &compatible
   set nocompatible
 endif
@@ -40,11 +40,14 @@ autocmd! BufWritePost,BufReadPost * Neomake
 " For JS Syntax
 call dein#add('pangloss/vim-javascript')
 
-" Ctrl + p make me smart file search
+" Ctrl + p make vim smart file search
 call dein#add('ctrlpvim/ctrlp.vim')
+let g:ctrlp_custom_ignore = '\v[\/](public|vender|storage|node_modules|target|dist)|(\.(swp|ico|git|svn))$'
+set wildignore+=*/node_modules/*,*/gulp/temp/*,*.so,*.swp,*.zip
 
 " CSS Fixer http://csscomb.com/
 call dein#add('csscomb/vim-csscomb')
+autocmd FileType css noremap <buffer> <leader>bc :CSScomb<CR>
 
 " easy motion(cursor movement)
 call dein#add('easymotion/vim-easymotion')
@@ -54,6 +57,20 @@ nmap s <Plug>(easymotion-s2)
 
 " editorconfig
 call dein#add('editorconfig/editorconfig-vim')
+
+" filer
+call dein#add('Shougo/vimfiler.vim')
+let g:vimfiler_as_default_explorer = 1
+let g:vimfiler_safe_mode_by_default=0
+autocmd VimEnter * VimFiler -split -simple -winwidth=30 -no-quit
+autocmd BufNewFile * VimFiler -split -simple -winwidth=30 -no-quit
+noremap <C-n> :let g:vimfiler_edit_action = 'open'<CR>
+
+" neocomplcache
+call dein#add('Shougo/neocomplcache')
+let g:neocomplcache_dictionary_filetype_lists = {
+  \ 'default' : ''
+  \ }
 
 call dein#add('markstory/vim-files.git')
 call dein#add('evidens/vim-twig')
@@ -77,8 +94,6 @@ call dein#add('slim-template/vim-slim')
 call dein#add('tpope/vim-surround')
 call dein#add('tpope/vim-haml')
 call dein#add('tpope/vim-rails')
-call dein#add('Shougo/vimfiler.vim')
-call dein#add('Shougo/neocomplcache')
 call dein#add('Shougo/vimshell')
 call dein#add('Shougo/unite.vim')
 
@@ -112,19 +127,15 @@ noremap mc :'s,'ey<CR>
 noremap md :'s,'ed<CR>
 noremap wq :r! good bye!<CR>,wq<CR>
 noremap <C-t> :tabnew_cdl<CR>
-noremap <C-n> :let g:vimfiler_edit_action = 'open'<CR>
 """""""""""""""""""""""autocmd"""""""""""""""""""""
 autocmd BufRead,BufWritePost * Neomake
 autocmd BufRead,BufNewFile *.es6 setfiletype javascript
 autocmd BufRead,BufNewFile,BufReadPre *.coffee   set filetype=coffee
-autocmd FileType css noremap <buffer> <leader>bc :CSScomb<CR>
 autocmd FileType coffee    setlocal sw=2 sts=2 ts=2 et
 autocmd QuickFixCmdPost * nested cwindow | redraw! 
 autocmd BufNewFile,BufRead *.slim set ft=slim
 autocmd VimEnter,BufRead,BufNewFile *.twig set ft=html
 autocmd VimEnter,BufRead,BufNewFile *.html.twig set ft=html
-autocmd VimEnter * VimFiler -split -simple -winwidth=30 -no-quit
-autocmd BufNewFile * VimFiler -split -simple -winwidth=30 -no-quit
 """""""""""""""""""""""config"""""""""""""""""""""""
 set clipboard=unnamed,autoselect
 set noexpandtab
@@ -146,9 +157,6 @@ set encoding=utf-8
 set fileencodings=utf-8,iso-2022-jp,euc-jp,sjis
 set fileformats=unix,dos,mac
 set nowrap
-set foldcolumn=4
-set foldmethod=indent
-set foldlevel=100
 set backspace=indent,eol,start
 
 let g:vim_markdown_folding_disabled=1
@@ -159,18 +167,7 @@ let g:netrw_altv = 1
 let g:netrw_alto = 1
 let g:Powerline_colorscheme='my'
 let complcache_enable_at_startup = 1
-let g:vimfiler_as_default_explorer = 1
-let g:vimfiler_safe_mode_by_default=0
 let g:netrw_liststyle=3
-
-"ctrlp
-let g:ctrlp_custom_ignore = '\v[\/](public|vender|storage|node_modules|target|dist)|(\.(swp|ico|git|svn))$'
-set wildignore+=*/node_modules/*,*/gulp/temp/*,*.so,*.swp,*.zip
-
-"dist
-let g:neocomplcache_dictionary_filetype_lists = {
-  \ 'default' : ''
-  \ }
 
 set completeopt=menuone
 for k in split("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_",'\zs')
@@ -180,24 +177,12 @@ endfor
 imap <expr> <TAB> pumvisible() ? "\<Down>" : "\<Tab>"
 colorscheme darkblue
 
-"""""""""""""""""""""for swift"""""""""""""""""""""
-au BufRead,BufNewFile *.swift setfiletype swift
-au FileType swift call FileType_Swift()
-
-function! FileType_Swift()
-    if exists("b:did_ftswift") | return | endif
-    let b:did_ftswift = 1
-
-    nnoremap <buffer> <Leader>sw :Shell xcrun swift -i %
-endfunction
-"""""""""""""""""""""""""tab""""""""""""""""""""""""""
-" Anywhere SID.
+" TAB
 function! s:SID_PREFIX()
   return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
 endfunction
 
-" Set tabline.
-function! s:my_tabline()  "{{{
+function! s:my_tabline()
   let s = ''
   for i in range(1, tabpagenr('$'))
     let bufnrs = tabpagebuflist(i)
@@ -214,13 +199,14 @@ function! s:my_tabline()  "{{{
   endfor
   let s .= '%#TabLineFill#%T%=%#TabLine#'
   return s
-endfunction "}}}
+endfunction
 let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
-set showtabline=2 " 常にタブラインを表示
+set showtabline=2
 
 " The prefix key.
 nnoremap    [Tag]   <Nop>
 nmap    t [Tag]
+
 " Tab jump
 for n in range(1, 9)
   execute 'nnoremap <silent> [Tag]'.n  ':<C-u>tabnext'.n.'<CR>'
