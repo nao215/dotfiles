@@ -1,4 +1,4 @@
- """""""""""""""""""""""Dein"""""""""""""""""""""""
+"""""""""""""""""""""""Dein"""""""""""""""""""""""
 if &compatible
   set nocompatible
 endif
@@ -11,7 +11,8 @@ call dein#begin(expand('~/.cache/dein'))
 call dein#add('Shougo/dein.vim')
 
 " For Git
-call dein#add('vim-fugitive')
+call dein#add('tpope/vim-fugitive')
+call dein#add('airblade/vim-gitgutter')
 
 " For JSX
 call dein#add('mxw/vim-jsx')
