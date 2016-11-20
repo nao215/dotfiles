@@ -10,6 +10,32 @@ call dein#begin(expand('~/.cache/dein'))
 " Dark powered vim plugin manager
 call dein#add('Shougo/dein.vim')
 
+" Git log viewer
+call dein#add('gregsexton/gitv')
+
+autocmd FileType gitv call s:my_gitv_settings()
+autocmd FileType git setlocal nofoldenable foldlevel=0
+autocmd FileType git :setlocal foldlevel=99
+
+function! s:toggle_git_folding()
+  if &filetype ==# 'git'
+    setlocal foldenable!
+  endif
+endfunction
+
+function! s:my_gitv_settings()
+	setlocal iskeyword+=/,-,.
+	nnoremap <silent><buffer> C :<C-u>Git checkout <C-r><C-w><CR>
+	nnoremap <buffer> <Space>rb :<C-u>Git rebase <C-r>=GitvGetCurrentHash()<CR><Space>
+	nnoremap <buffer> <Space>R :<C-u>Git revert <C-r>=GitvGetCurrentHash()<CR><CR>
+	nnoremap <buffer> <Space>h :<C-u>Git cherry-pick <C-r>=GitvGetCurrentHash()<CR><CR>
+	nnoremap <buffer> <Space>rh :<C-u>Git reset --hard <C-r>=GitvGetCurrentHash()<CR>
+endfunction
+
+function! s:gitv_get_current_hash()
+  return matchstr(getline('.'), '\[\zs.\{7\}\ze\]$')
+endfunction
+
 " For Git
 call dein#add('tpope/vim-fugitive')
 call dein#add('airblade/vim-gitgutter')
@@ -138,8 +164,8 @@ autocmd VimEnter,BufRead,BufNewFile *.twig set ft=html
 autocmd VimEnter,BufRead,BufNewFile *.html.twig set ft=html
 """""""""""""""""""""""config"""""""""""""""""""""""
 set clipboard=unnamed,autoselect
-set noexpandtab
 set tabstop=2
+set expandtab
 set softtabstop=2
 set shiftwidth=2
 set cursorline
