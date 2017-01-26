@@ -1,9 +1,18 @@
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+# dircolors
+export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"")"
 
-#alias
+# anyenv
+if [ -d $HOME/.anyenv ] ; then
+    export PATH="$HOME/.anyenv/bin:$PATH"
+    eval "$(anyenv init -)"
+fi
+
+# alias
 alias startmysql='cd /usr/local/Cellar/mysql/5.6.19/support-files;mysql.server start'
-#ssh my server
-alias sshmysrv='ssh yanagisawa@153.121.73.36' 
+alias vi='vim'
+alias bim='vim'
+
+# JS compile
 alias jsc="/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Resources/jsc"
 
 autoload -U colors; colors
@@ -25,16 +34,6 @@ parse-git-branch()
     fi
 }
 
-
-eval $(/usr/local/bin/gdircolors ~/workspace/ForSystem/solarized/dircolors-solarized-master/dircolors.ansi-universal)
-
-#[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-
-#alias ls='gls --color=auto'
-#rbenv
-export PATH=$HOME/.rbenv/bin:$PATH
-eval "$(rbenv init - zsh)"
-if which rbenv > /dev/null; then eval "$(rbenv init - zsh)"; fi
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
@@ -146,11 +145,9 @@ export ANT_ROOT=/usr/local/Cellar/ant/1.9.3/libexec/bin
 export PATH=$ANT_ROOT:$PATH
 
 export CPATH=/usr/include/hdf5/mpich
-export LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/hdf5/mpich
 export PKG_CONFIG_PATH=/opt/luajit-2.0.3/lib/pkgconfig
 
 # Docker
 export DOCKER_HOST=tcp://localhost:4243
 
 export PATH=/usr/local/bin:$PATH
-export PATH=/Users/01014562/FDK/Tools/osx:$PATH

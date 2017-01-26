@@ -8,7 +8,10 @@
   ch = checkout
   br = branch
   cm = commit
+  ps = push origin head
 [filter "lfs"]
   clean = git-lfs clean %f
   smudge = git-lfs smudge %f
   required = true
+[core]
+  editor=/usr/local/bin/vim

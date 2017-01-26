@@ -2,7 +2,6 @@
 if &compatible
   set nocompatible
 endif
-
 set runtimepath^=~/.homesick/repos/dotfiles/home/repos/github.com/Shougo/dein.vim
 
 call dein#begin(expand('~/.cache/dein'))
@@ -10,7 +9,8 @@ call dein#begin(expand('~/.cache/dein'))
 " Dark powered vim plugin manager
 call dein#add('Shougo/dein.vim')
 
-" Git log viewer
+" Git
+call dein#add('tpope/vim-fugitive')
 call dein#add('gregsexton/gitv')
 
 autocmd FileType gitv call s:my_gitv_settings()
@@ -24,21 +24,38 @@ function! s:toggle_git_folding()
 endfunction
 
 function! s:my_gitv_settings()
-	setlocal iskeyword+=/,-,.
-	nnoremap <silent><buffer> C :<C-u>Git checkout <C-r><C-w><CR>
-	nnoremap <buffer> <Space>rb :<C-u>Git rebase <C-r>=GitvGetCurrentHash()<CR><Space>
-	nnoremap <buffer> <Space>R :<C-u>Git revert <C-r>=GitvGetCurrentHash()<CR><CR>
-	nnoremap <buffer> <Space>h :<C-u>Git cherry-pick <C-r>=GitvGetCurrentHash()<CR><CR>
-	nnoremap <buffer> <Space>rh :<C-u>Git reset --hard <C-r>=GitvGetCurrentHash()<CR>
+    setlocal iskeyword+=/,-,.
+    nnoremap <silent><buffer> C :<C-u>Git checkout <C-r><C-w><CR>
+    nnoremap <buffer> <Space>rb :<C-u>Git rebase <C-r>=GitvGetCurrentHash()<CR><Space>
+    nnoremap <buffer> <Space>R :<C-u>Git revert <C-r>=GitvGetCurrentHash()<CR><CR>
+    nnoremap <buffer> <Space>h :<C-u>Git cherry-pick <C-r>=GitvGetCurrentHash()<CR><CR>
+    nnoremap <buffer> <Space>rh :<C-u>Git reset --hard <C-r>=GitvGetCurrentHash()<CR>
 endfunction
 
 function! s:gitv_get_current_hash()
   return matchstr(getline('.'), '\[\zs.\{7\}\ze\]$')
 endfunction
 
-" For Git
-call dein#add('tpope/vim-fugitive')
-call dein#add('airblade/vim-gitgutter')
+" For python
+call dein#add('lambdalisue/vim-pyenv')
+
+if filereadable('~/.pyenv/shims/python')
+    let $PYTHON_DLL = '~/.pyenv/shims/python' 
+endif
+
+function! s:set_python_path()
+    let s:python_path = system('python3 -', 'import sys;sys.stdout.write(",".join(sys.path))')
+
+    python3 <<EOT
+import sys
+import vim
+
+python_paths = vim.eval('s:python_path').split(',')
+for path in python_paths:
+    if not path in sys.path:
+        sys.path.insert(0, path)
+EOT
+endfunction
 
 " For JSX
 call dein#add('mxw/vim-jsx')
@@ -71,9 +88,9 @@ call dein#add('ctrlpvim/ctrlp.vim')
 let g:ctrlp_custom_ignore = '\v[\/](public|vender|storage|node_modules|target|dist)|(\.(swp|ico|git|svn))$'
 set wildignore+=*/node_modules/*,*/gulp/temp/*,*.so,*.swp,*.zip
 
-" CSS Fixer http://csscomb.com/
-call dein#add('csscomb/vim-csscomb')
-autocmd FileType css noremap <buffer> <leader>bc :CSScomb<CR>
+" CSS Fixer
+call dein#add('kewah/vim-stylefmt')
+autocmd FileType css noremap <buffer> <leader>bc :Stylefmt<CR>
 
 " easy motion(cursor movement)
 call dein#add('easymotion/vim-easymotion')
@@ -98,6 +115,9 @@ let g:neocomplcache_dictionary_filetype_lists = {
   \ 'default' : ''
   \ }
 
+" powerline
+call dein#add('Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'})
+
 call dein#add('markstory/vim-files.git')
 call dein#add('evidens/vim-twig')
 call dein#add('haya14busa/vim-migemo')
@@ -112,7 +132,6 @@ call dein#add('toyamarinyon/vim-swift')
 call dein#add('gre/play2vim')
 call dein#add('alpaca-tc/alpaca_powertabline')
 call dein#add('othree/html5.vim')
-call dein#add('Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'})
 call dein#add('groenewege/vim-less')
 call dein#add('Yggdroot/indentLine')
 call dein#add('vim-ruby/vim-ruby')
@@ -133,7 +152,7 @@ map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
 map <C-l> gt
 map <C-h> gT
-map <C-c> :CSScomb<CR>
+map <C-c> :Stylefmt<CR>
 inoremap { {}<LEFT>
 inoremap [ []<LEFT>
 inoremap ( ()<LEFT>
@@ -163,7 +182,13 @@ autocmd BufNewFile,BufRead *.slim set ft=slim
 autocmd VimEnter,BufRead,BufNewFile *.twig set ft=html
 autocmd VimEnter,BufRead,BufNewFile *.html.twig set ft=html
 """""""""""""""""""""""config"""""""""""""""""""""""
+" paste
+execute "set <f28>=\<Esc>[200~"
+execute "set <f29>=\<Esc>[201~"
+cmap <f28> <nop>
+cmap <f29> <nop>
 set clipboard=unnamed,autoselect
+
 set tabstop=2
 set expandtab
 set softtabstop=2
