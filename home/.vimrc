@@ -9,9 +9,21 @@ call dein#begin(expand('~/.cache/dein'))
 " Dark powered vim plugin manager
 call dein#add('Shougo/dein.vim')
 
+
+" Grep
+call dein#add('mileszs/ack.vim')
+
+let g:ackprg = 'rg --vimgrep --no-heading'
+
+if executable("rg")
+  set grepprg=rg\ --vimgrep\ --no-heading
+  set grepformat=%f:%l:%c:%m,%f:%l:%m
+endif
+
 " Git
 call dein#add('tpope/vim-fugitive')
 call dein#add('gregsexton/gitv')
+call dein#add('airblade/vim-gitgutter')
 
 autocmd FileType gitv call s:my_gitv_settings()
 autocmd FileType git setlocal nofoldenable foldlevel=0
@@ -164,7 +176,7 @@ vnoremap ( "zdi^V(<C-R>z)<ESC>
 vnoremap " "zdi^V"<C-R>z^V"<ESC>
 vnoremap ' "zdi'<C-R>z'<ESC>
 noremap <C-a> ^
-noremap <C-g> :vimgrep
+noremap <C-g> :Ack
 noremap <C-e> $
 noremap <C-k> d$
 noremap <silent> <C-p> "0p<CR>
