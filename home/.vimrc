@@ -2,7 +2,7 @@
 if &compatible
   set nocompatible
 endif
-set runtimepath^=~/.homesick/repos/dotfiles/home/repos/github.com/Shougo/dein.vim
+set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
 
 call dein#begin(expand('~/.cache/dein'))
 
@@ -46,27 +46,6 @@ endfunction
 
 function! s:gitv_get_current_hash()
   return matchstr(getline('.'), '\[\zs.\{7\}\ze\]$')
-endfunction
-
-" For python
-call dein#add('lambdalisue/vim-pyenv')
-
-if filereadable('~/.pyenv/shims/python')
-    let $PYTHON_DLL = '~/.pyenv/shims/python' 
-endif
-
-function! s:set_python_path()
-    let s:python_path = system('python3 -', 'import sys;sys.stdout.write(",".join(sys.path))')
-
-    python3 <<EOT
-import sys
-import vim
-
-python_paths = vim.eval('s:python_path').split(',')
-for path in python_paths:
-    if not path in sys.path:
-        sys.path.insert(0, path)
-EOT
 endfunction
 
 " For JSX
@@ -127,8 +106,8 @@ let g:neocomplcache_dictionary_filetype_lists = {
   \ 'default' : ''
   \ }
 
-" powerline
-call dein#add('Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'})
+call dein#add('vim-airline/vim-airline')
+let g:airline_powerline_fonts = 1
 
 call dein#add('markstory/vim-files.git')
 call dein#add('evidens/vim-twig')
@@ -208,7 +187,6 @@ set shiftwidth=2
 set cursorline
 set number
 set laststatus=2
-set rtp+=.vim/bundle/powerline/powerline/bindings/vim
 set noswapfile
 set t_Co=256
 set mouse=a

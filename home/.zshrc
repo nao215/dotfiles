@@ -1,20 +1,13 @@
 # dircolors
 export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"")"
 
-# anyenv
-if [ -d $HOME/.anyenv ] ; then
-    export PATH="$HOME/.anyenv/bin:$PATH"
-    eval "$(anyenv init -)"
-fi
-
 # alias
-alias startmysql='cd /usr/local/Cellar/mysql/5.6.19/support-files;mysql.server start'
 alias vi='vim'
 alias bim='vim'
+alias mysql='/usr/local/opt/mysql@5.6/bin/mysql'
+alias mysql.server='/usr/local/opt/mysql@5.6/bin/mysql.server'
 
 # JS compile
-alias jsc="/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Resources/jsc"
-
 autoload -U colors; colors
 
 export HISTTIMEFORMAT='%y/%m/%d %H:%M:%S'
@@ -112,34 +105,6 @@ plugins=(git)
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 # export MANPATH="/usr/local/man:$MANPATH"
 
-source $ZSH/oh-my-zsh.sh
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-# Add environment variable COCOS_CONSOLE_ROOT for cocos2d-x
-
 # Add environment variable ANT_ROOT for cocos2d-x
 export ANT_ROOT=/usr/local/Cellar/ant/1.9.3/libexec/bin
 export PATH=$ANT_ROOT:$PATH
@@ -151,3 +116,8 @@ export PKG_CONFIG_PATH=/opt/luajit-2.0.3/lib/pkgconfig
 export DOCKER_HOST=tcp://localhost:4243
 
 export PATH=/usr/local/bin:$PATH
+
+# anyenv
+export PATH="$HOME/.anyenv/bin:$PATH"
+eval "$(anyenv init -)"
+
