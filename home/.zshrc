@@ -105,10 +105,6 @@ plugins=(git)
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 # export MANPATH="/usr/local/man:$MANPATH"
 
-# Add environment variable ANT_ROOT for cocos2d-x
-export ANT_ROOT=/usr/local/Cellar/ant/1.9.3/libexec/bin
-export PATH=$ANT_ROOT:$PATH
-
 export CPATH=/usr/include/hdf5/mpich
 export PKG_CONFIG_PATH=/opt/luajit-2.0.3/lib/pkgconfig
 
