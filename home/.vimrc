@@ -9,6 +9,10 @@ call dein#begin(expand('~/.cache/dein'))
 " Dark powered vim plugin manager
 call dein#add('Shougo/dein.vim')
 
+" For JS Syntax
+call dein#add('pangloss/vim-javascript')
+call dein#add('mxw/vim-jsx')
+call dein#add('leafgarland/typescript-vim')
 
 " Grep
 call dein#add('mileszs/ack.vim')
@@ -48,9 +52,6 @@ function! s:gitv_get_current_hash()
   return matchstr(getline('.'), '\[\zs.\{7\}\ze\]$')
 endfunction
 
-" For JSX
-call dein#add('mxw/vim-jsx')
-
 " Neomake
 call dein#add('neomake/neomake')
 function! NeomakeESlintChecker()
@@ -66,18 +67,33 @@ function! NeomakeESlintChecker()
   endif
 
   let b:neomake_javascript_eslint_exe = l:eslint
+  let b:neomake_typescript_eslint_exe = l:eslint
 endfunction
 autocmd FileType javascript :call NeomakeESlintChecker()
+autocmd FileType typescript :call NeomakeESlintChecker()
 
-autocmd! BufWritePost,BufReadPost * Neomake
+let g:neomake_javascript_enabled_makers = ['eslint']
+let g:neomake_typescript_enabled_makers = ['eslint']
 
-" For JS Syntax
-call dein#add('pangloss/vim-javascript')
+au BufRead,BufNewFile,BufWritePost * Neomake
 
-" Ctrl + p make vim smart file search
+" CtrlP
 call dein#add('ctrlpvim/ctrlp.vim')
 let g:ctrlp_custom_ignore = '\v[\/](public|vender|storage|node_modules|target|dist)|(\.(swp|ico|git|svn))$'
 set wildignore+=*/node_modules/*,*/gulp/temp/*,*.so,*.swp,*.zip
+
+function! SetupCtrlP()
+  if exists("g:loaded_ctrlp") && g:loaded_ctrlp
+    augroup CtrlPExtension
+      autocmd!
+      autocmd FocusGained  * CtrlPClearCache
+      autocmd BufWritePost * CtrlPClearCache
+    augroup END
+  endif
+endfunction
+if has("autocmd")
+  autocmd VimEnter * :call SetupCtrlP()
+endif
 
 " CSS Fixer
 call dein#add('kewah/vim-stylefmt')
