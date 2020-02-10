@@ -12,7 +12,6 @@ call dein#begin(expand('~/.cache/dein'))
 " Dark powered vim plugin manager
 call dein#add('Shougo/dein.vim')
 
-
 " Grep
 call dein#add('mileszs/ack.vim')
 
@@ -76,35 +75,40 @@ endfunction
 call dein#add('vim-airline/vim-airline')
 call dein#add('vim-airline/vim-airline-themes')
 
-" Neomake
-call dein#add('neomake/neomake')
-function! NeomakeESlintChecker()
-  let l:npm_bin = ''
-  let l:eslint = 'eslint'
-
-  if executable('npm')
-    let l:npm_bin = split(system('npm bin'), '\n')[0]
-  endif
-
-  if strlen(l:npm_bin) && executable(l:npm_bin . '/eslint')
-    let l:eslint = l:npm_bin . '/eslint'
-  endif
-
-  let b:neomake_javascript_eslint_exe = l:eslint
-endfunction
-autocmd FileType javascript :call NeomakeESlintChecker()
-
-autocmd! BufWritePost,BufReadPost * Neomake
+" Syntax check
+call dein#add('w0rp/ale')
+let g:ale_linters = {
+\ 'javascript': ['eslint'],
+\ 'typescript': ['eslint']
+\ }
+let g:ale_fixers = {
+\ '*': ['remove_trailing_lines', 'trim_whitespace'],
+\ 'javascript': ['prettier', 'eslint'],
+\ 'typescript': ['prettier', 'eslint'],
+\ 'css': ['prettier'],
+\}
+let g:ale_fix_on_save = 1
+let g:ale_javascript_prettier_use_local_config = 1
+let g:ale_statusline_format = ['⨉ %d', ' %d', '⬥ ok']
 
 " For JS
 call dein#add('pangloss/vim-javascript')
-call dein#add('Shougo/vimproc.vim', { 'build' : 'make -f make_mac.mak' })
-call dein#add('Quramy/tsuquyomi')
 call dein#add('prettier/vim-prettier')
 call dein#add('mxw/vim-jsx')
 
 let g:prettier#autoformat = 0
 autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
+
+" For Typescript"
+call dein#add('leafgarland/typescript-vim')
+call dein#add('peitalin/vim-jsx-typescript')
+call dein#add('Shougo/vimproc.vim', { 'build' : 'make -f make_mac.mak' })
+call dein#add('Quramy/tsuquyomi')
+
+augroup SyntaxSettings
+    autocmd!
+    autocmd BufNewFile,BufRead *.tsx set filetype=typescript
+augroup END
 
 " Ctrl + p make vim smart file search
 call dein#add('ctrlpvim/ctrlp.vim')
@@ -192,9 +196,8 @@ noremap <silent> <C-p> "0p<CR>
 noremap mc :'s,'ey<CR>
 noremap md :'s,'ed<CR>
 noremap wq :r! good bye!<CR>,wq<CR>
-noremap <C-t> :tabnew_cdl<CR>
+noremap tt :tabnew_cdl<CR>
 """""""""""""""""""""""autocmd"""""""""""""""""""""
-autocmd BufRead,BufWritePost * Neomake
 autocmd BufRead,BufNewFile *.es6 setfiletype javascript
 autocmd BufRead,BufNewFile,BufReadPre *.coffee   set filetype=coffee
 autocmd FileType coffee    setlocal sw=2 sts=2 ts=2 et
