@@ -1,3 +1,6 @@
+let g:python_host_prog = '/Users/nao/.anyenv/envs/pyenv/versions/neovim2/bin/python'
+let g:python3_host_prog = '/Users/nao/.anyenv/envs/pyenv/versions/neovim3/bin/python'
+
 " Dein Settings
 if &compatible
   set nocompatible
@@ -9,10 +12,6 @@ call dein#begin(expand('~/.cache/dein'))
 " Dark powered vim plugin manager
 call dein#add('Shougo/dein.vim')
 
-" For JS Syntax
-call dein#add('pangloss/vim-javascript')
-call dein#add('mxw/vim-jsx')
-call dein#add('leafgarland/typescript-vim')
 
 " Grep
 call dein#add('mileszs/ack.vim')
@@ -52,6 +51,31 @@ function! s:gitv_get_current_hash()
   return matchstr(getline('.'), '\[\zs.\{7\}\ze\]$')
 endfunction
 
+" For python
+call dein#add('lambdalisue/vim-pyenv')
+
+if filereadable('~/.pyenv/shims/python')
+    let $PYTHON_DLL = '~/.pyenv/shims/python'
+endif
+
+function! s:set_python_path()
+    let s:python_path = system('python3 -', 'import sys;sys.stdout.write(",".join(sys.path))')
+
+    python3 <<EOT
+import sys
+import vim
+
+python_paths = vim.eval('s:python_path').split(',')
+for path in python_paths:
+    if not path in sys.path:
+        sys.path.insert(0, path)
+EOT
+endfunction
+
+" Status bar
+call dein#add('vim-airline/vim-airline')
+call dein#add('vim-airline/vim-airline-themes')
+
 " Neomake
 call dein#add('neomake/neomake')
 function! NeomakeESlintChecker()
@@ -67,33 +91,25 @@ function! NeomakeESlintChecker()
   endif
 
   let b:neomake_javascript_eslint_exe = l:eslint
-  let b:neomake_typescript_eslint_exe = l:eslint
 endfunction
 autocmd FileType javascript :call NeomakeESlintChecker()
-autocmd FileType typescript :call NeomakeESlintChecker()
 
-let g:neomake_javascript_enabled_makers = ['eslint']
-let g:neomake_typescript_enabled_makers = ['eslint']
+autocmd! BufWritePost,BufReadPost * Neomake
 
-au BufRead,BufNewFile,BufWritePost * Neomake
+" For JS
+call dein#add('pangloss/vim-javascript')
+call dein#add('Shougo/vimproc.vim', { 'build' : 'make -f make_mac.mak' })
+call dein#add('Quramy/tsuquyomi')
+call dein#add('prettier/vim-prettier')
+call dein#add('mxw/vim-jsx')
 
-" CtrlP
+let g:prettier#autoformat = 0
+autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
+
+" Ctrl + p make vim smart file search
 call dein#add('ctrlpvim/ctrlp.vim')
 let g:ctrlp_custom_ignore = '\v[\/](public|vender|storage|node_modules|target|dist)|(\.(swp|ico|git|svn))$'
 set wildignore+=*/node_modules/*,*/gulp/temp/*,*.so,*.swp,*.zip
-
-function! SetupCtrlP()
-  if exists("g:loaded_ctrlp") && g:loaded_ctrlp
-    augroup CtrlPExtension
-      autocmd!
-      autocmd FocusGained  * CtrlPClearCache
-      autocmd BufWritePost * CtrlPClearCache
-    augroup END
-  endif
-endfunction
-if has("autocmd")
-  autocmd VimEnter * :call SetupCtrlP()
-endif
 
 " CSS Fixer
 call dein#add('kewah/vim-stylefmt')
@@ -122,9 +138,6 @@ let g:neocomplcache_dictionary_filetype_lists = {
   \ 'default' : ''
   \ }
 
-call dein#add('vim-airline/vim-airline')
-let g:airline_powerline_fonts = 1
-
 call dein#add('markstory/vim-files.git')
 call dein#add('evidens/vim-twig')
 call dein#add('haya14busa/vim-migemo')
@@ -137,7 +150,6 @@ call dein#add('othree/yajs.vim', {'autoload':{'filetypes':['javascript']}})
 call dein#add('stephpy/vim-yaml')
 call dein#add('toyamarinyon/vim-swift')
 call dein#add('gre/play2vim')
-call dein#add('alpaca-tc/alpaca_powertabline')
 call dein#add('othree/html5.vim')
 call dein#add('groenewege/vim-less')
 call dein#add('Yggdroot/indentLine')
@@ -148,6 +160,8 @@ call dein#add('tpope/vim-haml')
 call dein#add('tpope/vim-rails')
 call dein#add('Shougo/vimshell')
 call dein#add('Shougo/unite.vim')
+call dein#add('alpaca-tc/alpaca_powertabline')
+call dein#add('ap/vim-buftabline')
 
 call dein#end()
 
@@ -184,7 +198,7 @@ autocmd BufRead,BufWritePost * Neomake
 autocmd BufRead,BufNewFile *.es6 setfiletype javascript
 autocmd BufRead,BufNewFile,BufReadPre *.coffee   set filetype=coffee
 autocmd FileType coffee    setlocal sw=2 sts=2 ts=2 et
-autocmd QuickFixCmdPost * nested cwindow | redraw! 
+autocmd QuickFixCmdPost * nested cwindow | redraw!
 autocmd BufNewFile,BufRead *.slim set ft=slim
 autocmd VimEnter,BufRead,BufNewFile *.twig set ft=html
 autocmd VimEnter,BufRead,BufNewFile *.html.twig set ft=html
@@ -194,7 +208,7 @@ execute "set <f28>=\<Esc>[200~"
 execute "set <f29>=\<Esc>[201~"
 cmap <f28> <nop>
 cmap <f29> <nop>
-set clipboard=unnamed,autoselect
+set clipboard=unnamed
 
 set tabstop=2
 set expandtab
@@ -217,12 +231,10 @@ set nowrap
 set backspace=indent,eol,start
 
 let g:vim_markdown_folding_disabled=1
-let g:Powerline_symbols = 'compatible'
 let g:netrw_liststyle = 3
 let g:netrw_list_hide = 'CVS,\(^\|\s\s\)\zs\.\S\+'
 let g:netrw_altv = 1
 let g:netrw_alto = 1
-let g:Powerline_colorscheme='my'
 let complcache_enable_at_startup = 1
 let g:netrw_liststyle=3
 
@@ -233,43 +245,3 @@ endfor
 
 imap <expr> <TAB> pumvisible() ? "\<Down>" : "\<Tab>"
 colorscheme darkblue
-
-" TAB
-function! s:SID_PREFIX()
-  return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
-endfunction
-
-function! s:my_tabline()
-  let s = ''
-  for i in range(1, tabpagenr('$'))
-    let bufnrs = tabpagebuflist(i)
-    let bufnr = bufnrs[tabpagewinnr(i) - 1]  " first window, first appears
-    let no = i  " display 0-origin tabpagenr.
-    let mod = getbufvar(bufnr, '&modified') ? '!' : ' '
-    let title = fnamemodify(bufname(bufnr), ':t')
-    let title = '[' . title . ']'
-    let s .= '%'.i.'T'
-    let s .= '%#' . (i == tabpagenr() ? 'TabLineSel' : 'TabLine') . '#'
-    let s .= no . ':' . title
-    let s .= mod
-    let s .= '%#TabLineFill# '
-  endfor
-  let s .= '%#TabLineFill#%T%=%#TabLine#'
-  return s
-endfunction
-let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
-set showtabline=2
-
-" The prefix key.
-nnoremap    [Tag]   <Nop>
-nmap    t [Tag]
-
-" Tab jump
-for n in range(1, 9)
-  execute 'nnoremap <silent> [Tag]'.n  ':<C-u>tabnext'.n.'<CR>'
-endfor
-map <silent> [Tag]n :tabnext<CR>   
-
-" For Edit Vimrc
-command! Rv source ~/.vimrc
-command! Ev edit ~/.vimrc
